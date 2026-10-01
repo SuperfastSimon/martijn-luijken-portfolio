@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mvp-ship-gate — Checklist mock</title>
+<style>
+  :root {
+    --ink: #0a0a0a; --paper: #f5f4f1; --grey: #a39e94; --muted: #3a3833;
+    --line: rgba(10,10,10,.12);
+    --serif: 'Iowan Old Style', Palatino, Georgia, serif;
+    --sans: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px clamp(16px, 3vw, 48px); border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .bar a:hover { color: var(--grey); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 40px clamp(16px, 3vw, 48px) 80px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 5vw, 48px); letter-spacing: -.02em; line-height: 1.05; margin-bottom: 8px; }
+  .sub { color: var(--muted); max-width: 52ch; margin-bottom: 28px; }
+  .status {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 18px 20px; border: 1px solid var(--ink); background: #fff; margin-bottom: 24px;
+  }
+  .status .label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  .status .verdict {
+    font-family: var(--serif); font-size: 22px; letter-spacing: -.01em;
+  }
+  .status.blocked .verdict { color: var(--ink); }
+  .status.passed { background: var(--ink); color: var(--paper); }
+  .status.passed .label { color: var(--grey); }
+  .list { border: 1px solid var(--ink); background: #fff; }
+  .item {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: 14px; align-items: start;
+    padding: 16px 18px; border-bottom: 1px solid var(--line); cursor: pointer;
+  }
+  .item:last-child { border-bottom: none; }
+  .box {
+    width: 18px; height: 18px; border: 1px solid var(--ink); margin-top: 2px;
+    display: grid; place-items: center; font-size: 11px; flex-shrink: 0;
+  }
+  .item.on .box { background: var(--ink); color: var(--paper); }
+  .item .title { font-weight: 500; margin-bottom: 2px; }
+  .item .desc { font-size: 13px; color: var(--muted); }
+  .item .req {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); white-space: nowrap;
+  }
+  .actions { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    padding: 12px 18px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  }
+  button.ghost { background: transparent; color: var(--ink); }
+  button:hover { opacity: .85; }
+  .log {
+    margin-top: 20px; padding: 14px; background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 12px; line-height: 1.7; white-space: pre-wrap; min-height: 72px;
+  }
+  .note { margin-top: 16px; font-size: 12px; color: var(--grey); font-family: var(--mono); }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <a href="../index.html">← Portfolio</a>
+    <span>mvp-ship-gate · mock</span>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Demo slice 04</p>
+    <h1>Ship-gate checklist</h1>
+    <p class="sub">Blocking MVP delivery gate zoals in CI. Vink criteria af — gate blijft rood tot alles groen is. Mock, geen GitHub Action run.</p>
+    <div class="status blocked" id="banner">
+      <span class="label">GitHub Actions · mvp-ship-gate</span>
+      <span class="verdict" id="verdict">BLOCKED</span>
+    </div>
+    <div class="list" id="list">
+      <div class="item" data-key="tests">
+        <div class="box"></div>
+        <div>
+          <div class="title">Unit + integration tests</div>
+          <div class="desc">Test-suite groen op de target branch.</div>
+        </div>
+        <span class="req">Required</span>
+      </div>
+      <div class="item" data-key="smoke">
+        <div class="box"></div>
+        <div>
+          <div class="title">Smoke / health check</div>
+          <div class="desc">Deploy-URL of container beantwoordt /health.</div>
+        </div>
+        <span class="req">Required</span>
+      </div>
+      <div class="item" data-key="docs">
+        <div class="box"></div>
+        <div>
+          <div class="title">README + runbook</div>
+          <div class="desc">How-to-run en rollback aanwezig.</div>
+        </div>
+        <span class="req">Required</span>
+      </div>
+      <div class="item" data-key="secrets">
+        <div class="box"></div>
+        <div>
+          <div class="title">No secrets in diff</div>
+          <div class="desc">Secret-scan clean op gewijzigde files.</div>
+        </div>
+        <span class="req">Required</span>
+      </div>
+      <div class="item" data-key="owner">
+        <div class="box"></div>
+        <div>
+          <div class="title">Owner sign-off</div>
+          <div class="desc">Product/eng owner gemarkeerd in PR.</div>
+        </div>
+        <span class="req">Required</span>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" id="evaluate">Evaluate gate</button>
+      <button type="button" class="ghost" id="reset">Reset</button>
+    </div>
+    <div class="log" id="log">Awaiting evaluation…</div>
+    <p class="note">Mock van mvp-ship-gate. In productie faalt de Action hard bij missing checks.</p>
+  </div>
+<script>
+(function () {
+  var items = document.querySelectorAll('.item');
+  var state = {};
+  items.forEach(function (el) {
+    var key = el.getAttribute('data-key');
+    state[key] = false;
+    el.addEventListener('click', function () {
+      state[key] = !state[key];
+      el.classList.toggle('on', state[key]);
+      el.querySelector('.box').textContent = state[key] ? '✓' : '';
+    });
+  });
+  function evaluate() {
+    var keys = Object.keys(state);
+    var pass = keys.every(function (k) { return state[k]; });
+    var missing = keys.filter(function (k) { return !state[k]; });
+    var banner = document.getElementById('banner');
+    var verdict = document.getElementById('verdict');
+    if (pass) {
+      banner.className = 'status passed';
+      verdict.textContent = 'SHIP';
+      document.getElementById('log').textContent =
+        'exit_code: 0\nall required checks passed\nmerge to main: allowed (mock)';
+    } else {
+      banner.className = 'status blocked';
+      verdict.textContent = 'BLOCKED';
+      document.getElementById('log').textContent =
+        'exit_code: 1\nblocked by: ' + missing.join(', ') + '\nmerge to main: denied (mock)';
+    }
+  }
+  document.getElementById('evaluate').addEventListener('click', evaluate);
+  document.getElementById('reset').addEventListener('click', function () {
+    Object.keys(state).forEach(function (k) { state[k] = false; });
+    items.forEach(function (el) {
+      el.classList.remove('on');
+      el.querySelector('.box').textContent = '';
+    });
+    document.getElementById('banner').className = 'status blocked';
+    document.getElementById('verdict').textContent = 'BLOCKED';
+    document.getElementById('log').textContent = 'Awaiting evaluation…';
+  });
+})();
+</script>
+</body>
+</html>
