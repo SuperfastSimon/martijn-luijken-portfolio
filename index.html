@@ -1,1 +1,222 @@
-@file:///workspace/portfolio-martijn/index.html
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Martijn Luijken — full-stack / product builder in Breda. SaaS, data pipelines, automation.">
+<title>Martijn Luijken — Full-stack / Product Builder</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span>View</span></div>
+
+<header>
+  <a href="#top">Martijn Luijken</a>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-meta">
+      <span>Full-stack / Product builder</span>
+      <span>Breda, NL</span>
+    </div>
+    <h1 class="name" id="name" aria-label="Martijn Luijken"></h1>
+    <div class="hero-line">
+      <p>Bouw producten die data, ads en automation samenbrengen — van landed-cost engines tot LLM-routers en delivery gates. Strak, shipbaar, gericht op SaaS-teams die snel moeten leveren.</p>
+      <span class="scroll"><i></i> Scroll</span>
+    </div>
+  </section>
+
+  <section class="section wrap" id="work">
+    <div class="section-head reveal">
+      <h2>Selected Work</h2>
+      <span class="index">01 — Cases</span>
+    </div>
+    <ul class="cases" id="projects">
+
+      <li class="case reveal" data-art="1">
+        <span class="num">01</span>
+        <div class="case-body">
+          <div class="case-top">
+            <h3>ImportChecker</h3>
+            <span class="year">2025</span>
+          </div>
+          <p class="problem">Nederlandse auto-import is versnipperd: BPM, landed costs en importeurs matching zonder één betrouwbare flow.</p>
+          <div class="tags">
+            <span class="tag">Rust</span>
+            <span class="tag">BPM engine</span>
+            <span class="tag">Landed costs</span>
+            <span class="tag">Matching</span>
+          </div>
+          <ul class="bullets">
+            <li>BPM-berekening en landed-cost model als herbruikbare engine</li>
+            <li>Matching van voertuigen tegen importeurs- en marktdata</li>
+            <li>Gericht op operationele import-workflows, niet alleen dashboards</li>
+          </ul>
+          <div class="case-actions">
+            <a class="btn" href="https://github.com/SuperfastSimon/ImportChecker" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow">→</span></a>
+            <a class="btn btn-solid" href="demos/importchecker.html">Demo <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="case reveal" data-art="2">
+        <span class="num">02</span>
+        <div class="case-body">
+          <div class="case-top">
+            <h3>FreeLLMRoute</h3>
+            <span class="year">2025</span>
+          </div>
+          <p class="problem">Gratis LLM-providers wisselen constant; apps hebben één router nodig die providers, limieten en fallbacks netjes afhandelt.</p>
+          <div class="tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">LLM router</span>
+            <span class="tag">Android</span>
+            <span class="tag">Web demo</span>
+          </div>
+          <ul class="bullets">
+            <li>Multi-provider routing over gratis / low-cost endpoints</li>
+            <li>Android- en web-demo om providerkeuze en fallback te tonen</li>
+            <li>TypeScript-core zodat dezelfde logica in meerdere clients landt</li>
+          </ul>
+          <div class="case-actions">
+            <a class="btn" href="https://github.com/SuperfastSimon/FreeLLMRoute" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow">→</span></a>
+            <a class="btn btn-solid" href="demos/freellmroute.html">Demo <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="case reveal" data-art="3">
+        <span class="num">03</span>
+        <div class="case-body">
+          <div class="case-top">
+            <h3>CarbonTrace NL</h3>
+            <span class="year">2025</span>
+          </div>
+          <p class="problem">Supply-chain claims zonder aantoonbaar pad van bron naar product zijn lastig te verkopen — en lastiger te auditen.</p>
+          <div class="tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">Dashboard</span>
+            <span class="tag">Supply chain</span>
+            <span class="tag">Proof trail</span>
+          </div>
+          <ul class="bullets">
+            <li>Dashboard voor carbon- en herkomstbewijs in NL-ketens</li>
+            <li>Timeline / proof-trail van schakels in de keten</li>
+            <li>Gericht op leesbare evidence, niet alleen aggregaten</li>
+          </ul>
+          <div class="case-actions">
+            <a class="btn" href="https://github.com/SuperfastSimon/carbontrace-nl" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow">→</span></a>
+            <a class="btn btn-solid" href="demos/carbontrace.html">Demo <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="case reveal" data-art="4">
+        <span class="num">04</span>
+        <div class="case-body">
+          <div class="case-top">
+            <h3>mvp-ship-gate</h3>
+            <span class="year">2025</span>
+          </div>
+          <p class="problem">MVPs landen te vaak half: geen checklist, geen blocking gate, wel een merge naar main.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">CI gate</span>
+            <span class="tag">MVP delivery</span>
+          </div>
+          <ul class="bullets">
+            <li>Blocking delivery-gate als GitHub Action</li>
+            <li>Checklist voor ship-ready MVP (tests, docs, smoke, secrets)</li>
+            <li>Faalt hard wanneer criteria niet gehaald zijn — geen soft warnings</li>
+          </ul>
+          <div class="case-actions">
+            <a class="btn" href="https://github.com/SuperfastSimon/mvp-ship-gate" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow">→</span></a>
+            <a class="btn btn-solid" href="demos/mvp-ship-gate.html">Demo <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="case reveal" data-art="5">
+        <span class="num">05</span>
+        <div class="case-body">
+          <div class="case-top">
+            <h3>fastapi-products-crud</h3>
+            <span class="year">2024</span>
+          </div>
+          <p class="problem">Een schone FastAPI + SQL producten-API als basis voor SaaS-CRUD, evidence en latere AI-lagen.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">SQL</span>
+            <span class="tag">CRUD</span>
+          </div>
+          <ul class="bullets">
+            <li>REST CRUD voor producten met typed schemas</li>
+            <li>SQL-backed persistence — duidelijk FastAPI-skill signaal</li>
+            <li>Geschikt als foundation voor admin UI of agent/tooling erbovenop</li>
+          </ul>
+          <div class="case-actions">
+            <a class="btn" href="https://github.com/SuperfastSimon/fastapi-products-crud" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow">→</span></a>
+            <a class="btn btn-solid" href="demos/fastapi-products.html">Demo <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <section class="section wrap" id="about">
+    <div class="section-head reveal">
+      <h2>About</h2>
+      <span class="index">02 — Profile</span>
+    </div>
+    <div class="about-grid">
+      <p class="pull reveal">Ik bouw <em>producten die data en automation</em> verbinden — betrouwbaar genoeg voor productie, snel genoeg voor een SaaS-team.</p>
+      <div class="about-copy reveal">
+        <p>Martijn Luijken is full-stack / product builder in Breda. Focus op SaaS rond ads, data en automation: engines, routers, dashboards en delivery-gates die teams daadwerkelijk kunnen shippen.</p>
+        <p>Stack loopt van Rust en TypeScript tot Python/FastAPI en CI. Liever één scherpe flow die werkt dan tien half-af features. Beschikbaar voor product- en engineeringrollen bij growth- en data-gedreven SaaS.</p>
+      </div>
+    </div>
+    <dl class="facts reveal">
+      <div class="fact"><dt>Based</dt><dd>Breda, NL</dd></div>
+      <div class="fact"><dt>Focus</dt><dd>SaaS · Data · Automation</dd></div>
+      <div class="fact"><dt>Stack</dt><dd>TS · Rust · Python</dd></div>
+      <div class="fact"><dt>GitHub</dt><dd>SuperfastSimon</dd></div>
+    </dl>
+  </section>
+
+  <section class="contact wrap" id="contact">
+    <span class="index reveal">03 — Contact</span>
+    <a class="big reveal" href="mailto:martijnluijken86@gmail.com">Laten we iets shippen.</a>
+    <div class="contact-links reveal">
+      <a href="mailto:martijnluijken86@gmail.com">martijnluijken86@gmail.com</a>
+      <a href="tel:+31624264240">+31 6 24 26 42 40</a>
+      <a href="https://github.com/SuperfastSimon" target="_blank" rel="noopener noreferrer">github.com/SuperfastSimon</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="track">
+      <span>Full-stack</span><span>Product</span><span>TypeScript</span><span>Rust</span><span>Python</span><span>FastAPI</span><span>CI / CD</span><span>Data pipelines</span><span>LLM tooling</span>
+    </div>
+  </div>
+  <div class="foot-meta">
+    <span>© 2026 Martijn Luijken</span>
+    <span><a href="mailto:martijnluijken86@gmail.com">martijnluijken86@gmail.com</a></span>
+    <span><a href="tel:+31624264240">+31 6 24 26 42 40</a> · <a href="https://github.com/SuperfastSimon" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
