@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CarbonTrace NL — Chain timeline mock</title>
+<style>
+  :root {
+    --ink: #0a0a0a; --paper: #f5f4f1; --grey: #a39e94; --muted: #3a3833;
+    --line: rgba(10,10,10,.12);
+    --serif: 'Iowan Old Style', Palatino, Georgia, serif;
+    --sans: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px clamp(16px, 3vw, 48px); border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .bar a:hover { color: var(--grey); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px clamp(16px, 3vw, 48px) 80px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 5vw, 48px); letter-spacing: -.02em; line-height: 1.05; margin-bottom: 8px; }
+  .sub { color: var(--muted); max-width: 52ch; margin-bottom: 28px; }
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line);
+    border: 1px solid var(--ink); margin-bottom: 36px;
+  }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+  .stat { background: #fff; padding: 20px; }
+  .stat dt { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin-bottom: 6px; }
+  .stat dd { font-family: var(--serif); font-size: 26px; letter-spacing: -.02em; }
+  .timeline { border-left: 1px solid var(--ink); margin-left: 12px; padding-left: 28px; }
+  .node { position: relative; padding: 0 0 32px; }
+  .node:last-child { padding-bottom: 0; }
+  .node::before {
+    content: ''; position: absolute; left: -34px; top: 6px;
+    width: 11px; height: 11px; border-radius: 50%; background: var(--ink); border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  .node.soft::before { background: var(--paper); }
+  .node .when { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+  .node h3 { font-family: var(--serif); font-weight: 400; font-size: 20px; margin-bottom: 6px; }
+  .node p { color: var(--muted); max-width: 48ch; }
+  .proof {
+    margin-top: 10px; display: inline-flex; gap: 8px; flex-wrap: wrap;
+  }
+  .chip {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 8px; border: 1px solid var(--line); background: #fff;
+  }
+  .note { margin-top: 28px; font-size: 12px; color: var(--grey); font-family: var(--mono); }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <a href="../index.html">← Portfolio</a>
+    <span>CarbonTrace NL · mock</span>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Demo slice 03</p>
+    <h1>Supply-chain proof timeline</h1>
+    <p class="sub">Leesbare evidence-trail van bron naar product. Mock keten — geen live ledger.</p>
+    <dl class="stats">
+      <div class="stat"><dt>Product</dt><dd>NL Dairy Batch A12</dd></div>
+      <div class="stat"><dt>Declared CO₂e</dt><dd>1.8 kg / L</dd></div>
+      <div class="stat"><dt>Proof nodes</dt><dd>5 / 5</dd></div>
+    </dl>
+    <div class="timeline">
+      <div class="node">
+        <div class="when">01 · Farm · Friesland</div>
+        <h3>Melkwinning — De Weidehof</h3>
+        <p>Batch-registratie, diervoeder-herkomst en energie-input vastgelegd.</p>
+        <div class="proof"><span class="chip">Evidence hash · mock</span><span class="chip">Verified</span></div>
+      </div>
+      <div class="node">
+        <div class="when">02 · Collectie</div>
+        <h3>Tanker route NL-NW</h3>
+        <p>Temperatuurlog + km-afstand voor transportemissie.</p>
+        <div class="proof"><span class="chip">GPS trail · mock</span><span class="chip">Verified</span></div>
+      </div>
+      <div class="node">
+        <div class="when">03 · Processing</div>
+        <h3>Zuivelfabriek · pasteurisatie</h3>
+        <p>Energie-intensiteit per liter en watergebruik gekoppeld aan batch.</p>
+        <div class="proof"><span class="chip">Plant meter · mock</span><span class="chip">Verified</span></div>
+      </div>
+      <div class="node soft">
+        <div class="when">04 · Packaging</div>
+        <h3>Karton &amp; folie</h3>
+        <p>Leveranciersclaim verpakkingsmateriaal — wacht op secundaire check.</p>
+        <div class="proof"><span class="chip">Supplier cert</span><span class="chip">Pending review</span></div>
+      </div>
+      <div class="node">
+        <div class="when">05 · Retail DC</div>
+        <h3>Distributiecentrum Utrecht</h3>
+        <p>Inkomende scan + cold-chain intact tot DC-poort.</p>
+        <div class="proof"><span class="chip">DC intake</span><span class="chip">Verified</span></div>
+      </div>
+    </div>
+    <p class="note">Mock UI voor carbontrace-nl. Geen echte CO₂-berekening of auditclaim.</p>
+  </div>
+</body>
+</html>
