@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fastapi-products-crud — API explorer mock</title>
+<style>
+  :root {
+    --ink: #0a0a0a; --paper: #f5f4f1; --grey: #a39e94; --muted: #3a3833;
+    --line: rgba(10,10,10,.12);
+    --serif: 'Iowan Old Style', Palatino, Georgia, serif;
+    --sans: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px clamp(16px, 3vw, 48px); border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .bar a:hover { color: var(--grey); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px clamp(16px, 3vw, 48px) 80px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); margin-bottom: 12px; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 5vw, 48px); letter-spacing: -.02em; line-height: 1.05; margin-bottom: 8px; }
+  .sub { color: var(--muted); max-width: 52ch; margin-bottom: 28px; }
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+  .endpoints { border: 1px solid var(--ink); background: #fff; }
+  .ep {
+    display: block; width: 100%; text-align: left; padding: 14px 16px; border: none; border-bottom: 1px solid var(--line);
+    background: transparent; cursor: pointer; font-family: var(--mono); font-size: 12px; color: var(--ink);
+  }
+  .ep:last-child { border-bottom: none; }
+  .ep.on { background: var(--ink); color: var(--paper); }
+  .ep .method { display: inline-block; width: 42px; color: var(--grey); }
+  .ep.on .method { color: var(--grey); }
+  .panel { border: 1px solid var(--ink); background: #fff; padding: 24px; min-height: 360px; }
+  .panel h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin-bottom: 6px; }
+  .panel .path { font-family: var(--mono); font-size: 12px; color: var(--grey); margin-bottom: 18px; }
+  label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin-bottom: 6px; margin-top: 12px; }
+  input, textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line); background: var(--paper);
+    font-family: var(--mono); font-size: 13px; color: var(--ink);
+  }
+  textarea { min-height: 100px; resize: vertical; }
+  button.run {
+    margin-top: 16px; padding: 12px 18px; background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  }
+  button.run:hover { background: transparent; color: var(--ink); }
+  .response {
+    margin-top: 20px; padding: 14px; background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 12px; line-height: 1.65; white-space: pre-wrap; overflow-x: auto;
+  }
+  .table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  .table th, .table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  .table th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); font-weight: 400; }
+  .note { margin-top: 20px; font-size: 12px; color: var(--grey); font-family: var(--mono); }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <a href="../index.html">← Portfolio</a>
+    <span>fastapi-products-crud · mock</span>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Demo slice 05</p>
+    <h1>Products API explorer</h1>
+    <p class="sub">FastAPI + SQL CRUD-explorer. In-memory mock responses — geen echte server.</p>
+    <div class="layout">
+      <div class="endpoints" id="eps">
+        <button type="button" class="ep on" data-ep="list"><span class="method">GET</span> /products</button>
+        <button type="button" class="ep" data-ep="get"><span class="method">GET</span> /products/{id}</button>
+        <button type="button" class="ep" data-ep="create"><span class="method">POST</span> /products</button>
+        <button type="button" class="ep" data-ep="patch"><span class="method">PATCH</span> /products/{id}</button>
+        <button type="button" class="ep" data-ep="del"><span class="method">DELETE</span> /products/{id}</button>
+      </div>
+      <div class="panel">
+        <h2 id="title">List products</h2>
+        <div class="path" id="path">GET /api/v1/products</div>
+        <div id="fields"></div>
+        <button type="button" class="run" id="run">Send (mock)</button>
+        <div class="response" id="out">{}</div>
+        <p class="note">In-browser store. Python/FastAPI skill signaal — geen live SQL.</p>
+      </div>
+    </div>
+  </div>
+<script>
+(function () {
+  var products = [
+    { id: 1, sku: 'SKU-100', name: 'Sensor Kit A', price_eur: 49.0, stock: 120 },
+    { id: 2, sku: 'SKU-220', name: 'Gateway Mini', price_eur: 129.5, stock: 34 },
+    { id: 3, sku: 'SKU-340', name: 'Pulse Meter', price_eur: 79.0, stock: 0 }
+  ];
+  var nextId = 4;
+  var current = 'list';
+  var defs = {
+    list: { title: 'List products', path: 'GET /api/v1/products', fields: '' },
+    get: { title: 'Get product', path: 'GET /api/v1/products/{id}', fields: '<label for="id">id</label><input id="id" value="1" />' },
+    create: { title: 'Create product', path: 'POST /api/v1/products', fields: '<label for="body">JSON body</label><textarea id="body">{\n  "sku": "SKU-400",\n  "name": "Edge Dongle",\n  "price_eur": 39.0,\n  "stock": 50\n}</textarea>' },
+    patch: { title: 'Update product', path: 'PATCH /api/v1/products/{id}', fields: '<label for="id">id</label><input id="id" value="2" /><label for="body">JSON body</label><textarea id="body">{\n  "stock": 40\n}</textarea>' },
+    del: { title: 'Delete product', path: 'DELETE /api/v1/products/{id}', fields: '<label for="id">id</label><input id="id" value="3" />' }
+  };
+
+  function show(ep) {
+    current = ep;
+    document.querySelectorAll('.ep').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-ep') === ep);
+    });
+    document.getElementById('title').textContent = defs[ep].title;
+    document.getElementById('path').textContent = defs[ep].path;
+    document.getElementById('fields').innerHTML = defs[ep].fields;
+    document.getElementById('out').textContent = '{}';
+  }
+
+  document.querySelectorAll('.ep').forEach(function (b) {
+    b.addEventListener('click', function () { show(b.getAttribute('data-ep')); });
+  });
+
+  document.getElementById('run').addEventListener('click', function () {
+    var out = document.getElementById('out');
+    try {
+      if (current === 'list') {
+        out.textContent = JSON.stringify({ items: products, count: products.length }, null, 2);
+      } else if (current === 'get') {
+        var id = +document.getElementById('id').value;
+        var found = products.find(function (p) { return p.id === id; });
+        out.textContent = found
+          ? JSON.stringify(found, null, 2)
+          : JSON.stringify({ detail: 'Product not found' }, null, 2);
+      } else if (current === 'create') {
+        var body = JSON.parse(document.getElementById('body').value);
+        var created = { id: nextId++, sku: body.sku, name: body.name, price_eur: body.price_eur, stock: body.stock };
+        products.push(created);
+        out.textContent = JSON.stringify({ status: 201, product: created }, null, 2);
+      } else if (current === 'patch') {
+        var pid = +document.getElementById('id').value;
+        var patch = JSON.parse(document.getElementById('body').value);
+        var target = products.find(function (p) { return p.id === pid; });
+        if (!target) { out.textContent = JSON.stringify({ detail: 'Product not found' }, null, 2); return; }
+        Object.keys(patch).forEach(function (k) { target[k] = patch[k]; });
+        out.textContent = JSON.stringify({ status: 200, product: target }, null, 2);
+      } else if (current === 'del') {
+        var did = +document.getElementById('id').value;
+        var before = products.length;
+        products = products.filter(function (p) { return p.id !== did; });
+        out.textContent = JSON.stringify({
+          status: products.length < before ? 204 : 404,
+          detail: products.length < before ? 'deleted' : 'Product not found'
+        }, null, 2);
+      }
+    } catch (e) {
+      out.textContent = JSON.stringify({ error: 'Invalid JSON / input', message: String(e.message) }, null, 2);
+    }
+  });
+
+  show('list');
+  document.getElementById('run').click();
+})();
+</script>
+</body>
+</html>
